@@ -1,9 +1,20 @@
+/**
+ * Author : Deepak Karki
+ * copyright 2014
+ */
 package com.example.droidshield;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.droidshield.DroidConnect;
+/*
+ * This activity handles the UI when the user starts the app.
+ * The key functionality is to make a bluetooth connection to the H/W
+ * and to start the service so that the H/W can start interacting with it.  
+ */
 
 public class MainActivity extends ActionBarActivity {
 
