@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DroidShield</string>
+    <string name="welcome_text">Welcome to DroidShield</string>
+    <string name="connect_button">Connect to H/W</string>
+    <string name="start_service">Start Service</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
