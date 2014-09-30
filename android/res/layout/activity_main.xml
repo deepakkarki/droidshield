@@ -9,7 +9,7 @@
     tools:context="com.example.droidshield.MainActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -30,9 +30,18 @@
         android:id="@+id/connect_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/welcome_text"
+        android:layout_below="@+id/welcome_text"
         android:layout_marginTop="54dp"
         android:text="@string/connect_button" />
+
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcome_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="" />
 
 </RelativeLayout>
