@@ -25,6 +25,10 @@ import com.example.droidshield.DroidConnect;
 public class MainActivity extends ActionBarActivity {
 
 	DroidConnect dev;
+	boolean service_active; //variable will be set by the service while running
+	
+	//TODO : I have to make service button inactive until device is connected.
+		//Aishwarya - your job
 	OnClickListener connect = new OnClickListener() 
 	{
 		@Override
@@ -34,9 +38,10 @@ public class MainActivity extends ActionBarActivity {
 			//device is not connected
 			if(!dev.isConnected()){
 				//TODO : replace the following hard code with code to scan bt device
+					//Aishwarya - your job
 				
 				//add code to select mac of bluetooth
-				dev.setMAC("00:12:12:24:16:30"); 
+				dev.setMAC("00:12:12:24:16:30"); //replace with dev.setDevice
 				
 				//try to connect
 				if(dev.connect()){
@@ -54,13 +59,18 @@ public class MainActivity extends ActionBarActivity {
 				}
 			}
 			
-			//else device is connected
+			//else device is connected; now close
 			
 			else{
+				if(service_active){//remove this later; just disable this btn when service is running
+					//make the "callback" myself
+					start_service.onClick(findViewById(R.id.start_service));
+				}
 				dev.close();
 				con.setText("Connect to H/W");
 				TextView status = (TextView) findViewById(R.id.status_text);
 				status.setText("");
+				
 			}
 		}
 	};
@@ -68,8 +78,32 @@ public class MainActivity extends ActionBarActivity {
 	OnClickListener start_service = new OnClickListener() 
 	{
 		@Override
-		public void onClick(View conn_button) {
-			//start the service -- which is not yet written
+		public void onClick(View ser_button) {
+			Button ser = (Button) ser_button;
+			
+			TextView status = (TextView) findViewById(R.id.status_text);
+			
+			if(dev.isConnected()){//remove this; just disable service button when not connected.
+				
+				if(!service_active){
+					status.setText("Service Started");
+					ser.setText("Stop Service");
+					//start the service -- which is not yet written
+				}
+				
+				else{
+					//shutdown the service -- which is not yet written
+					status.setText("");
+					ser.setText("Start Service");
+				}
+			}
+			
+			else{
+				//make a TOAST and warn that connect device first
+				Context context = getApplicationContext();
+				Toast toast = Toast.makeText(context, "Connect device first!", Toast.LENGTH_SHORT);
+				toast.show();
+			}
 		}
 	};
 	

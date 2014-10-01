@@ -75,6 +75,12 @@ public class DroidConnect {
 			//TODO make toast and exit
 			return false;
 		}
+		
+		//if there is already an active connection; close it. 
+		if(isConnected()){
+			this.close();
+		}
+		
 		//make sure bt module is enabled.
 		while(!btAdpt.isEnabled()){
 		   Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -108,7 +114,7 @@ public class DroidConnect {
 	
 	public void sendByte(byte ch)
 	{
-		if(connected){
+		if(isConnected()){
 			int c = (int)ch;
 			
 			try{	
@@ -123,7 +129,7 @@ public class DroidConnect {
 	
 	public void send(byte[] data)
 	{
-		if(connected)
+		if(isConnected())
 		{
 			try{
 				dev_out.write(data);
@@ -138,7 +144,7 @@ public class DroidConnect {
 	public byte[] read(int num)
 	{
 		byte [] data =  new byte[num];
-		if (connected){
+		if (isConnected()){
 			
 			try{
 				dev_in.read(data);
@@ -154,7 +160,7 @@ public class DroidConnect {
 	public byte readByte()
 	{
 		//does it make sense to r/w in terms of int instead?? 
-		if(connected){
+		if(isConnected()){
 			
 			try{	
 				return (byte) dev_in.read();
@@ -170,7 +176,7 @@ public class DroidConnect {
 	
 	void close() 
     {
-		if (connected){
+		if (isConnected()){
 		
 			try
 			{
