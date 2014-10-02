@@ -72,7 +72,6 @@ public class DroidConnect {
 	public boolean connect()
 	{
 		if(dev_mac == null){
-			//TODO make toast and exit
 			return false;
 		}
 		
@@ -107,7 +106,6 @@ public class DroidConnect {
 	        return true;
 		}
 		catch(IOException e){
-			//make a toast? --no, let caller handle it!
 			return false; 
 		}
 	}
@@ -122,7 +120,6 @@ public class DroidConnect {
 			}
 			
 			catch(IOException e){
-				//TODO : do what if the device itself is not connected?
 			}
 		}
 	}

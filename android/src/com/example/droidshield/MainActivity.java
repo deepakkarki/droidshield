@@ -25,10 +25,11 @@ import com.example.droidshield.DroidConnect;
 public class MainActivity extends ActionBarActivity {
 
 	DroidConnect dev;
-	boolean service_active; //variable will be set by the service while running
+	static boolean service_active; //variable will be set by the service while running
 	
 	//TODO : I have to make service button inactive until device is connected.
-		//Aishwarya - your job
+			//and make connect button inactive when service is running.
+		//Aishwarya - ^ is your job, just 4 lines.
 	OnClickListener connect = new OnClickListener() 
 	{
 		@Override
@@ -38,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
 			//device is not connected
 			if(!dev.isConnected()){
 				//TODO : replace the following hard code with code to scan bt device
-					//Aishwarya - your job
+					//Aishwarya - your job; decently big
 				
 				//add code to select mac of bluetooth
 				dev.setMAC("00:12:12:24:16:30"); //replace with dev.setDevice
