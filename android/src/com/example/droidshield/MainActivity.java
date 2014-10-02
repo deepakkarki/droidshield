@@ -24,7 +24,7 @@ import com.example.droidshield.DroidConnect;
 
 public class MainActivity extends ActionBarActivity {
 
-	DroidConnect dev;
+	static DroidConnect dev;
 	static boolean service_active; //variable will be set by the service while running
 	
 	//TODO : I have to make service button inactive until device is connected.

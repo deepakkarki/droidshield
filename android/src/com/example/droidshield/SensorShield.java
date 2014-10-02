@@ -13,7 +13,7 @@ package com.example.droidshield;
 
 public interface SensorShield {
 	//all values have to be written to bluetooth stream as string itself, so may as well return a string. 
-	public String getValue(char [] data);
+	public String getValue(DroidConnect dev);
 	//But will it make better sense to have a object of custom type "Info" returned.
 	//Info will have constructors of all types
 	//Info(String), Info(int), Info(float), etc. 

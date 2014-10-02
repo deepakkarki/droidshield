@@ -26,6 +26,7 @@ public class ShieldService extends Service {
 	public void onCreate()
 	{
 		super.onCreate();
+		dev = MainActivity.dev;
 		shield_thread = new Thread(new ShieldThread(), "shield_thread");
 		running = true;
 		shield_thread.start();
@@ -77,14 +78,32 @@ public class ShieldService extends Service {
 		
 		public void startShield()
 		{
+			String retVal = null;
 			while(running){
 				//get data from bluetooth device
-				//parse it
-				//get result
-				//if result != null
-					//send it back
+				int opCode = (int)dev.readByte();
+				
+				if(opCode < 128 && sensors[opCode] != null){ 
+					//TODO : maybe I need to use synchronize {}, just in case
+					retVal = sensors[opCode].getValue(dev);
+				}
+				
+				else if (opCode < 256 && actuators[opCode] != null){
+					retVal = actuators[opCode].setValue(dev);
+				}
+				
+				else{
+					//screw it
+					continue;
+					//TODO : wait..... I should clear the buffer?
+				}
+				
+				if (retVal != null){
+					dev.send(retVal.getBytes());
+				}
 			}
-		}	
+		}
+		
 	}
 	
 }
