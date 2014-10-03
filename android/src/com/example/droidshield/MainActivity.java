@@ -64,6 +64,7 @@ public class MainActivity extends ActionBarActivity {
 			
 			else{
 				if(service_active){//remove this later; just disable this btn when service is running
+					
 					//make the "callback" myself
 					start_service.onClick(findViewById(R.id.start_service));
 				}

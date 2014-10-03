@@ -7,6 +7,8 @@ package com.example.droidshield;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
+
 import com.example.droidshield.DroidConnect;
 
 public class ShieldService extends Service {
@@ -82,10 +84,12 @@ public class ShieldService extends Service {
 			while(running){
 				//get data from bluetooth device
 				int opCode = (int)dev.readByte();
+				Log.i("acc-request-code", Integer.toString(opCode));
 				
 				if(opCode < 128 && sensors[opCode] != null){ 
 					//TODO : maybe I need to use synchronize {}, just in case
 					retVal = sensors[opCode].getValue(dev);
+					Log.i("acc-data", retVal);
 				}
 				
 				else if (opCode < 256 && actuators[opCode] != null){

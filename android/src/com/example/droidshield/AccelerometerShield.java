@@ -9,7 +9,7 @@ import android.hardware.SensorManager;
 public class AccelerometerShield implements SensorShield, SensorEventListener {
 
 	//value of the accelerometer reading
-	String value;
+	static String value;
 	
 	private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -22,7 +22,7 @@ public class AccelerometerShield implements SensorShield, SensorEventListener {
     
 	@Override
 	public String getValue(DroidConnect dev) {
-		// TODO take the data, char[0] will specify x/y/z axis reading 
+		// TODO extract data from dev, it will specify x/y/z axis reading 
 		
 		//register the listener
 		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
