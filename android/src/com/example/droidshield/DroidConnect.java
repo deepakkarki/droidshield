@@ -8,12 +8,12 @@ package com.example.droidshield;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.UUID;
+import java.lang.reflect.Method;
 import android.app.Activity;
 /*
  * This class acts as a wrapper for accessing bluetooth device
@@ -39,18 +39,24 @@ public class DroidConnect {
     //48 bit MAC identifier for the bluetooth module. 
     private String dev_mac;
     
+    //every DroidConect object has a activity with which it is associated
+    private Activity activity;
+    
     //whether or not the connection is established 
     private boolean connected;
     
-    public DroidConnect()
+    
+    public DroidConnect(Activity a)
 	{
+    	activity = a;
 		btAdpt = BluetoothAdapter.getDefaultAdapter();
 		connected = false;
 	}
 	
     
-	public DroidConnect(String mac)
+	public DroidConnect(Activity a, String mac)
 	{
+		activity = a;
 		btAdpt = BluetoothAdapter.getDefaultAdapter();
 		connected = false;
 		dev_mac = mac;
@@ -75,29 +81,45 @@ public class DroidConnect {
 			return false;
 		}
 		
-		//if there is already an active connection; close it. 
+		//if there is already an active connection; close it.
+		//then continue 
 		if(isConnected()){
 			this.close();
 		}
+		Log.i("DroidConnect", "try connect procedure");
 		
+		// I have moved this functionality to MainActivity
 		//make sure bt module is enabled.
-		while(!btAdpt.isEnabled()){
-		   Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		   //TODO : check if this would even work!
-		   new Activity().startActivityForResult(enableBluetooth, 0);
+		if(!btAdpt.isEnabled()){
+			btAdpt.enable();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.getMessage();
+			}
 		}
-		
-		UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //Standard SerialPortService ID
 		
 		try{
 			//get the device with the required mac address
 			dev = btAdpt.getRemoteDevice(dev_mac);
+			Log.i("DroidConnect", "got dev");
 			
 			//create a socket to communicate
-	        sock = dev.createRfcommSocketToServiceRecord(uuid);
+	        //sock = dev.createRfcommSocketToServiceRecord(uuid);
+			Method m;
+			try {
+				m = dev.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
+				sock = (BluetoothSocket) m.invoke(dev, 1);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Log.e("DroidConnect", e.getMessage());
+			} 
+	         
+	        Log.i("DroidConnect", "creating socket");
 	        
 	        //establish the connection
 	        sock.connect();
+	        Log.i("DroidConnect", "connection successful");
 	        
 	        //set the input and output streams
 	        dev_out = sock.getOutputStream();
@@ -106,9 +128,11 @@ public class DroidConnect {
 	        return true;
 		}
 		catch(IOException e){
+			Log.i("DroidConnect-exception", e.getMessage());
 			return false; 
 		}
 	}
+	
 	
 	public void sendByte(byte ch)
 	{

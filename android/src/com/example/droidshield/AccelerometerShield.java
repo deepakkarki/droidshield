@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 public class AccelerometerShield implements SensorShield, SensorEventListener {
 
@@ -13,17 +14,21 @@ public class AccelerometerShield implements SensorShield, SensorEventListener {
 	
 	private SensorManager mSensorManager;
     private Sensor mAccelerometer;
-    
-    public AccelerometerShield()
+    private ShieldService ss;
+    //every 
+    public AccelerometerShield(ShieldService s)
     {
-    	 mSensorManager = (SensorManager)new Activity().getSystemService(Activity.SENSOR_SERVICE);
-         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    	ss= s;
+    	mSensorManager = (SensorManager)s.getSystemService(Activity.SENSOR_SERVICE);
+    	mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    	Log.i("Acc-Shield", "Created object");
     }
     
 	@Override
 	public String getValue(DroidConnect dev) {
 		// TODO extract data from dev, it will specify x/y/z axis reading 
 		
+		Log.i("Acc-Shield", "getting value");
 		//register the listener
 		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 		

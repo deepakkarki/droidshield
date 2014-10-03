@@ -6,7 +6,9 @@ package com.example.droidshield;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		public void onClick(View conn_button) {
 			Button con = (Button)conn_button;
+			Log.i("MainActivity", "onClick-started");
 			
 			//device is not connected
 			if(!dev.isConnected()){
@@ -43,9 +46,11 @@ public class MainActivity extends ActionBarActivity {
 				
 				//add code to select mac of bluetooth
 				dev.setMAC("00:12:12:24:16:30"); //replace with dev.setDevice
+				Log.i("MainActivity", "onClick-MACset");
 				
 				//try to connect
 				if(dev.connect()){
+					Log.i("MainActivity", "onClick-connected device");
 					con.setText("Disconnect");
 					TextView status = (TextView) findViewById(R.id.status_text);
 					status.setText("Connected to device!");
@@ -87,16 +92,20 @@ public class MainActivity extends ActionBarActivity {
 			
 			if(dev.isConnected()){//remove this; just disable service button when not connected.
 				
-				if(!service_active){
+				if(!MainActivity.service_active){
 					status.setText("Service Started");
 					ser.setText("Stop Service");
-					//start the service -- which is not yet written
+					//start the service 
+					Intent i = new Intent(MainActivity.this, ShieldService.class); 
+					startService(i);
 				}
 				
 				else{
-					//shutdown the service -- which is not yet written
+					//shutdown the service 
 					status.setText("");
 					ser.setText("Start Service");
+					Intent i = new Intent(MainActivity.this, ShieldService.class); 
+					stopService(i);
 				}
 			}
 			
@@ -112,12 +121,14 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("MainActivity", "onCreate-started");
 		setContentView(R.layout.activity_main);
-		dev = new DroidConnect();
+		dev = new DroidConnect(this);
 		Button conn = (Button)findViewById(R.id.connect_button);
 		Button service = (Button)findViewById(R.id.start_service);
 		conn.setOnClickListener(connect);
 		service.setOnClickListener(start_service);
+		Log.i("MainActivity", "onCreate-ended");
 	}
 
 	@Override

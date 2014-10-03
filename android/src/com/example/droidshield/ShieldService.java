@@ -27,8 +27,10 @@ public class ShieldService extends Service {
 	@Override 
 	public void onCreate()
 	{
+		Log.i("ShieldService", "onCreate started");
 		super.onCreate();
 		dev = MainActivity.dev;
+		setup();
 		shield_thread = new Thread(new ShieldThread(), "shield_thread");
 		running = true;
 		shield_thread.start();
@@ -39,12 +41,13 @@ public class ShieldService extends Service {
 	public void setup()
 	{
 		//sets up the arrays 'sensors' and 'actuators'
+		Log.i("ShieldService", "setting up stuff");
 		sensors = new SensorShield[127];
 		actuators = new ActuatorShield[127];
 		
-		sensors[0] = new AccelerometerShield();
-		sensors[1] = new ProximityShield();
-		actuators[0] = new VibrationShield();
+		sensors[1] = new AccelerometerShield(this);
+		sensors[2] = new ProximityShield();
+		actuators[1] = new VibrationShield();
 	}
 	
 	@Override
@@ -61,6 +64,7 @@ public class ShieldService extends Service {
 	@Override
 	public void onDestroy()
 	{
+		Log.i("ShieldService", "service being destroyed");
 		//stop the thread
 		running = false;
 		
@@ -75,12 +79,18 @@ public class ShieldService extends Service {
 		@Override
 		public void run() 
 		{
+			Log.i("ShieldService", "Thread-run");
 			startShield();
 		}
 		
 		public void startShield()
 		{
 			String retVal = null;
+			Log.i("ShieldService", "infinite loop starting in thread");
+			
+			//send init code
+			dev.sendByte((byte)1);
+			
 			while(running){
 				//get data from bluetooth device
 				int opCode = (int)dev.readByte();
@@ -101,7 +111,6 @@ public class ShieldService extends Service {
 					continue;
 					//TODO : wait..... I should clear the buffer?
 				}
-				
 				if (retVal != null){
 					dev.send(retVal.getBytes());
 				}
