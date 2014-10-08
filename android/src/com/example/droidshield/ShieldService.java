@@ -85,9 +85,10 @@ public class ShieldService extends Service {
 		
 		public void startShield()
 		{
-			String retVal = null;
+			byte [] retVal = null;
 			Log.i("ShieldService", "infinite loop starting in thread");
 			
+			//TODO : come up with a better initialization sequence than one below
 			//send init code
 			dev.sendByte((byte)1);
 			
@@ -99,7 +100,7 @@ public class ShieldService extends Service {
 				if(opCode < 128 && sensors[opCode] != null){ 
 					//TODO : maybe I need to use synchronize {}, just in case
 					retVal = sensors[opCode].getValue(dev);
-					Log.i("acc-data", retVal);
+					Log.i("acc-data", Byte.toString(retVal[0]));
 				}
 				
 				else if (opCode < 256 && actuators[opCode] != null){
@@ -112,7 +113,7 @@ public class ShieldService extends Service {
 					//TODO : wait..... I should clear the buffer?
 				}
 				if (retVal != null){
-					dev.send(retVal.getBytes());
+					dev.send(retVal);
 				}
 			}
 		}

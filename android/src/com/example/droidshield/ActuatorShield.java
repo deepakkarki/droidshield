@@ -11,5 +11,5 @@ package com.example.droidshield;
  */
 
 public interface ActuatorShield {
-	public String setValue(DroidConnect dev);
+	public byte[] setValue(DroidConnect dev);
 }
