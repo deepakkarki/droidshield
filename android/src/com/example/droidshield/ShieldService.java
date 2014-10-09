@@ -47,7 +47,7 @@ public class ShieldService extends Service {
 		
 		sensors[1] = new AccelerometerShield(this);
 		sensors[2] = new ProximityShield();
-		actuators[1] = new VibrationShield();
+		actuators[1] = new VibrationShield(this);
 	}
 	
 	@Override
@@ -104,7 +104,7 @@ public class ShieldService extends Service {
 				}
 				
 				else if (opCode < 256 && actuators[opCode] != null){
-					retVal = actuators[opCode].setValue(dev);
+					retVal = actuators[opCode -128].setValue(dev);
 				}
 				
 				else{
