@@ -111,7 +111,6 @@ public class DroidConnect {
 				m = dev.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
 				sock = (BluetoothSocket) m.invoke(dev, 1);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				Log.e("DroidConnect", e.getMessage());
 			} 
 	         

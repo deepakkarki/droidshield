@@ -30,6 +30,10 @@ public class ShieldService extends Service {
 		Log.i("ShieldService", "onCreate started");
 		super.onCreate();
 		dev = MainActivity.dev;
+		if(dev == null)
+		{
+			Log.e("ShieldService","Device is null in main");
+		}
 		setup();
 		shield_thread = new Thread(new ShieldThread(), "shield_thread");
 		running = true;
@@ -94,7 +98,9 @@ public class ShieldService extends Service {
 			
 			while(running){
 				//get data from bluetooth device
-				int opCode = (int)dev.readByte();
+				int opCode = (int)(dev.readByte() & 0xFF);
+				//NOTE byte range -128 to 127; above code makes it into an int of 0-255 
+				
 				Log.i("acc-request-code", Integer.toString(opCode));
 				
 				if(opCode < 128 && sensors[opCode] != null){ 
@@ -103,7 +109,7 @@ public class ShieldService extends Service {
 					Log.i("acc-data", Byte.toString(retVal[0]));
 				}
 				
-				else if (opCode < 256 && actuators[opCode] != null){
+				else if (opCode < 256 && actuators[opCode - 128] != null){
 					retVal = actuators[opCode -128].setValue(dev);
 				}
 				
