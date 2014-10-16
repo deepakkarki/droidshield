@@ -7,8 +7,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-public class AccelerometerShield implements SensorShield, SensorEventListener {
-
+public class AccelerometerShield implements SensorShield, SensorEventListener 
+{
 	//value of the accelerometer reading
 	private float current_value[];
 	
