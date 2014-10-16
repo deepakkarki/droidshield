@@ -49,9 +49,14 @@ public class ShieldService extends Service {
 		sensors = new SensorShield[127];
 		actuators = new ActuatorShield[127];
 		
+		//TODO : Magnetometer shield
+				//virtual servo / serial console
+		
 		sensors[1] = new AccelerometerShield(this);
-		sensors[2] = new ProximityShield();
+		sensors[2] = new ProximityShield(this); 
+		sensors[3] = new LumosityShield(this);
 		actuators[1] = new VibrationShield(this);
+		actuators[2] = new FlashShield(this);
 	}
 	
 	@Override
