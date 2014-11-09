@@ -45,7 +45,7 @@ public class LumosityShield implements SensorShield, SensorEventListener {
 		byte vals[]; 
 		
 		vals = new byte[1];
-		vals[0] = (byte)current_value[0]; //always 0
+		vals[0] = (byte)current_value[0]; //always index 0
 		Log.i("lumosity-shield",Float.toString(current_value[0]));
 		
 		
