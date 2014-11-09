@@ -75,6 +75,18 @@ public class AccelerometerShield implements SensorShield, SensorEventListener
 	public void onSensorChanged(SensorEvent event) {
 		//assign the current_value to the reading
 		current_value = event.values;
+		float min_1 = 0.0F;
+		float max_1 = 11.0F;
+		float range_1 = max_1 - min_1;
+		
+		float min_2 = 0.0F;
+		float max_2 = 180.0F;
+		float range_2 = max_2 - min_2;
+		
+		//map gravity from 0-11 => 0-180 degrees 
+		for(int i = 0; i< current_value.length;i++){
+			current_value[i] = (((current_value[i] - min_1)/range_1)*range_2) + min_2;
+		}
 		mSensorManager.unregisterListener(this);
 	}
 	
