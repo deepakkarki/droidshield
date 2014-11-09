@@ -57,6 +57,7 @@ public class ShieldService extends Service {
 		sensors[3] = new LumosityShield(this);
 		actuators[1] = new VibrationShield(this);
 		actuators[2] = new FlashShield(this);
+		actuators[3] = new SMSShield(this);
 	}
 	
 	@Override
@@ -114,7 +115,7 @@ public class ShieldService extends Service {
 					Log.i("acc-data", Byte.toString(retVal[0]));
 				}
 				
-				else if (opCode < 256 && actuators[opCode - 128] != null){
+				else if (opCode >128 && opCode < 256 && actuators[opCode - 128] != null){
 					retVal = actuators[opCode -128].setValue(dev);
 				}
 				
