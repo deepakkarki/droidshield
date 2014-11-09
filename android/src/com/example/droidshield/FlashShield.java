@@ -38,7 +38,6 @@ public class FlashShield implements ActuatorShield
 		}
 		
 		else {
-			camera = Camera.open();
 			Parameters p = camera.getParameters();
 			p.setFlashMode(Parameters.FLASH_MODE_OFF);
 			camera.setParameters(p);
