@@ -9,9 +9,9 @@ void setup() {
 void loop() {
   
   //if current acc data is > 5
-  if(getAccData() > 5){
+  if(getAccData() > 90){
     //vibrate the phone
-    vibrate();
+    vibrate(1);
   }
   
   else{
@@ -55,5 +55,5 @@ void vibrate(int time)
 {
    //vibrate for one second
     Serial.write(129);
-    Serial.write(1);
+    Serial.write(time);
 }
