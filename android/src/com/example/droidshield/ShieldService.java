@@ -112,7 +112,7 @@ public class ShieldService extends Service {
 				if(opCode < 128 && sensors[opCode] != null){ 
 					//TODO : maybe I need to use synchronize {}, just in case
 					retVal = sensors[opCode].getValue(dev);
-					Log.i("acc-data", Byte.toString(retVal[0]));
+					Log.i("acc-data", Integer.toString((int)(retVal[0] &0xFF)));
 				}
 				
 				else if (opCode >128 && opCode < 256 && actuators[opCode - 128] != null){

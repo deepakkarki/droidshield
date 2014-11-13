@@ -85,6 +85,9 @@ public class AccelerometerShield implements SensorShield, SensorEventListener
 		
 		//map gravity from 0-11 => 0-180 degrees 
 		for(int i = 0; i< current_value.length;i++){
+			if (current_value[i] < 0){
+				current_value[i] = 0;
+			}
 			current_value[i] = (((current_value[i] - min_1)/range_1)*range_2) + min_2;
 		}
 		mSensorManager.unregisterListener(this);

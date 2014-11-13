@@ -8,11 +8,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +55,10 @@ public class MainActivity extends ActionBarActivity {
 					Log.i("MainActivity", "onClick-connected device");
 					con.setText("Disconnect");
 					TextView status = (TextView) findViewById(R.id.status_text);
-					status.setText("Connected to device!");
+					status.setText("Connected to device!");/*
+					PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+					PowerManager.WakeLock wakeLock = pm.newWakeLock( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, "My wakelook");
+					wakeLock.acquire();*/
 				}
 				
 				else{
