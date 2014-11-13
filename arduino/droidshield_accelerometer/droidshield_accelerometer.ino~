@@ -1,19 +1,22 @@
-#include <Servo.h> 
-Servo s;
-
 int pin = 13;
 int val;
 void setup() {
   // put your setup code here, to run once:
-  s.attach(11);
   Serial.begin(9600);
   pinMode(pin, OUTPUT);
   init_shield(); //blocking shield
 }
 
 void loop() {
+  
   val = getAccData();
-  s.write(val);
+  
+  if(val > 90){
+    digitalWrite(pin, HIGH);
+  }
+  else{
+    digitalWrite(pin, LOW);
+  }
   delay(250);
   
 }
