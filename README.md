@@ -10,3 +10,31 @@ I started working on this framework because I was tired of not having the right 
 
 So I started asking myself what would be the easiest way to leverage the plethora of hardware utilities available on my mobile for my projects? What is the best way to seamlessly integrate them into my prototype? DroidShield was the result.
 
+##Goals
+Of course, at the high level the goal is to solve the problem stated under the motivation section. *How do you effectively enable the use of sensors and actuators on the mobile phone in your hardware projects/prototypes.* 
+
+Being a bit more specific, the idea is to have an API for the hardware with which can get or push data to the mobile. The user should be able to connect via Bluetooth or usb-serial, and use the APIs.
+
+For example
+```c
+#include "droidShield.h"
+
+// witch on flash light
+droidShield.flashLight.write(1);
+
+// end SMS
+droidShield.sms.send("9012345678", "Hello! How are you?");
+
+// read accelerometer 'x' axis 
+int x_val = droidShield.accel.read('x');
+```
+
+To make this happen, on the mobile side there is the droidShield mobile app. For the user it should  be a simple 2 step procedure :
+
+1. Switch on the app - app connects to the arduino either via Bluetooth or USB.
+2. User uses the API in his/her program.
+
+No more complexity on the user side should be needed - no android side coding, no looking up complex documentation, no buying and configuring hardware add-ons. 
+**Have an idea? Execute it!**
+
+
