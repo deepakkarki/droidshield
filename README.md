@@ -47,7 +47,7 @@ The following image explains the high level working of the system.
 2. This byte code is sent to the android device over the connection. This could be bluetooth, USB-serial or some other medium (though only BT is supported as of now). Irrespective of the transimssion medium, the interface remains the same to the user.
 3. Once the android app recieves the bytecode, it parses it and executes the command requested. This is returned to the user's hardware platform. After this the API call returns on the user's side.
 
-A brief presentation of the project can be found [here](https://goo.gl/R1745I).
+A brief presentation of the project can be found [here](https://goo.gl/YmLY1F).
 
 (Note : the project is a proof of concept. It is not yet ready for production/distribution)
 
